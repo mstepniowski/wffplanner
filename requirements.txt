@@ -1,0 +1,5 @@
+Django==1.4.1
+South==0.7.6
+django-social-auth==0.7.6
+requests==0.14.0
+facepy
