@@ -7,7 +7,9 @@ admin.autodiscover()
 
 
 urlpatterns = patterns('',
-    url(r'^$', 'wffplanner.views.index'),
+    url(r'^$', 'movies.views.calendar'),
+    url(r'^checkins/(?P<screening_id>\d+)/$', 'movies.views.checkin'),
+    url(r'^checkins/$', 'movies.views.get_checkins'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^social/', include('social_auth.urls')),
 )

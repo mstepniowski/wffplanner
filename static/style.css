@@ -1,0 +1,29 @@
+body {
+    font: 11px Georgia;
+    color: #333;
+}
+
+a {
+    font: 11px Georgia;
+    color: #333;
+    text-decoration: none;
+}
+
+table td {
+    border-right: 1px solid #333;
+    border-bottom: 1px solid #333;
+    padding: 5px;
+    width: 160px;
+}
+
+.room {
+    transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    width: 140px;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.active {
+    background-color: red;
+}
