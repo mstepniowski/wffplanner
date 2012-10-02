@@ -168,12 +168,10 @@ AUTHENTICATION_BACKENDS = (
 SOCIAL_AUTH_ENABLED_BACKENDS = ('facebook',)
 
 LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/accounts/profile/'
-SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/accounts/profile/'
-SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/accounts/profile/'
+LOGIN_REDIRECT_URL = '/'
 SOCIAL_AUTH_BACKEND_ERROR_URL = '/accounts/social-error/'
 
-FACEBOOK_EXTENDED_PERMISSIONS = ['user_events','friends_birthday','publish_actions','publish_stream','read_mailbox']
+FACEBOOK_EXTENDED_PERMISSIONS = []
 
 FACEBOOK_APP_ID = '542111425805166'
 FACEBOOK_API_SECRET = '078f173f43be3150aa550765cd91863b'
