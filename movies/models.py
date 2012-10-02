@@ -10,7 +10,8 @@ class Movie(models.Model):
     url = models.CharField(max_length=250, primary_key=True)
     title = models.CharField(max_length=250, null=False, blank=False)
     info = JSONField(json_type=dict, default='{}', null=False, blank=False)
-
+    collection = models.ForeignKey('self', null=True, blank=True)
+    
     def __unicode__(self):
         return self.title
 
@@ -36,7 +37,7 @@ class Checkin(models.Model):
 class Calendar(object):
     def __init__(self, screenings=None):
         self.screenings = (screenings if screenings is not None
-                           else Screening.objects.all())
+                           else Screening.objects.filter(movie__collection_id=None))
 
     def rooms(self):
         return set(screening.room for screening in self.screenings)
