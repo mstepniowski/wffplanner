@@ -48,11 +48,12 @@ $.ajaxSetup({
 
 $(function() {
     $.getJSON('checkins/', function (data) {
+        console.log(data);
         $.each(data.my_checkins, function () {
             $('#' + this).addClass('active');
         });
         $.each(data.friend_checkins, function () {
-            $('#' + this.id).append('<img src="//graph.facebook.com/' + this.facebook_id + '/picture" />');
+            $('#' + this.id).append('<img class="avatar" src="//graph.facebook.com/' + this.facebook_id + '/picture" />');
         });
     });
 
