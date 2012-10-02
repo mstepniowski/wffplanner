@@ -45,6 +45,18 @@ th {
     background-color: red;
 }
 
+.avatar {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #FFF;
+    -moz-box-shadow: 2px 2px 4px #999;
+    -webkit-box-shadow: 2px 2px 4px #999;
+    box-shadow: 2px 2px 4px #999;;
+    -moz-transform: rotate(7deg);
+    -webkit-transform: rotate(7deg);
+    transform: rotate(7deg);
+}
+
 .facebook-connect {
     background-color: white;
     color: #999;
