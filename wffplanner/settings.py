@@ -59,7 +59,7 @@ STATIC_ROOT = ''
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
-
+p
 # Additional locations of static files
 STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
@@ -176,7 +176,8 @@ AUTH_PROFILE_MODULE = 'django_facebook.FacebookProfile'
 
 FACEBOOK_APP_ID = '542111425805166'
 FACEBOOK_APP_SECRET = '078f173f43be3150aa550765cd91863b'
-
+FACEBOOK_DEFAULT_SCOPE = ['email', 'user_about_me', 'user_birthday', 'user_website', 'publish_actions']
+FACEBOOK_STORE_LOCAL_IMAGE = False
 
 try:
     from localsettings import *
