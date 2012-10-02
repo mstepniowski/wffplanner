@@ -17,17 +17,19 @@ td, th {
     border-bottom: 1px solid #999;
     padding: 0;
     background-color: #F3F3F3;
+    max-height: 100px;
+    overflow: hidden;
+}
+
+tr {
+    max-height: 100px;
+    overflow: hidden;
 }
 
 th {
     font-weight: bold;
-}
-
-#plan {
-    width: none;
-    overflow: scroll;
-    border-top: 5px solid #EEE;
-
+    padding: 10px 0;
+    background-color: #FFF;
 }
 
 .room {
@@ -52,20 +54,71 @@ th {
     transform: rotate(5deg);
 }
 
-.facebook-connect {
+.facebook-login {
+    position: absolute;
+    top: 10px;
+    left: 180px;
+    width: 200px;
+}
+
+#logo {
+    position: absolute;
+    top: -150px;
+    left: -150px;
+    z-index: 21;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background-color: red;
+    box-shadow: 6px 6px 12px darkred;
+}
+
+#logo div {
+    position: absolute;
+    top: 160px;
+    left: 160px;
+    color: white;
+    font-size: 32px;
+}
+
+#logo-patch {
+    position: absolute;
+    width: 90px;
+    height: 42px;
+    top: 120px;
+    left: 0;
+    background-color: red;
+    z-index: 22;
+}
+
+#header {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    height: 68px;
+    padding: 6px;
+    z-index: 20;
+    box-shadow: 6px 6px 12px #999;
+    border: 1px solid #999;
+    
     background-color: white;
     color: #999;
     line-height: 40px;
-    padding: 10px;
-    margin: 0;
     font-size: 21px;
-    text-shadow: 1px 1px #EEE;
-    
+    text-shadow: 1px 1px #EEE;   
 }
 
-.facebook-connect a {
-    float: left;
+#schedule {
+    position: absolute;
+    top: 80px;
+    right: 0;
+    bottom: 0;
+    left: 90px;
+    overflow: scroll;
 }
+
 
 .facebook-connect p {
     margin: 0 0 0 242px;
@@ -73,7 +126,7 @@ th {
 
 .screening {
     width: 140px;
-    height: 80px;
+    height: 89px;
     padding: 5px;
     position: relative;
 }
@@ -98,4 +151,55 @@ th {
 
 .avatar.me {
     border-color: yellow;
+}
+
+.facepile {
+    float: right;
+}
+
+#rooms {
+    position: absolute;
+    top: 81px;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 90px;
+    overflow: hidden;
+    background-color: red;
+    box-shadow: 6px 6px 12px darkred;
+    z-index: 20;
+}
+
+.time {
+    margin-left: 40px;
+    height: 10px;
+    width: 50px;
+    padding: 45px 10px;
+}
+
+.time b {
+    text-align: center;
+    color: #FFF;
+    
+}
+
+.room2 {
+    position: absolute;
+    border: 1px solid red;
+    width: 90px;
+    background-color: red;
+    border-top: 3px solid darkred;
+}
+
+.room2 span {
+    position: absolute;
+    top: 50%;
+    left: -82px;
+    width: 200px;
+    text-align: center;
+    height: 20px;
+    -moz-transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    color: #FFF;
+    font-size: 24px;
 }

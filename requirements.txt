@@ -4,3 +4,5 @@ django-social-auth==0.7.6
 requests==0.14.0
 facepy
 lxml
+django_facebook==4.2.1
+PIL

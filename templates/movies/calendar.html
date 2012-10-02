@@ -2,7 +2,7 @@
 <head>
     <title>WFF Planner</title>
     <link rel="stylesheet" href="/static/style.css" type="text/css" media="screen" />
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <link href="{{ STATIC_URL }}css/facebook.css" type="text/css" rel="stylesheet" media="all" />
     <meta property="fb:app_id" content="542111425805166" />
     <meta property="og:title" content="Warm Romantic Comedy" />
     <meta property="og:image" content="https://s-static.ak.fbcdn.net/images/devsite/attachment_blank.png" />
@@ -10,21 +10,44 @@
     <meta property="og:type" content="video.movie" />
 </head>
 
-{% if not social_auth.facebook %}
-<div class="facebook-connect"><a href="{% url socialauth_begin 'facebook' %}"><img src="/static/img/facebook-connect.png?dssa"></a> <p>to see screenings your friends are attending and set your own.</p></div>
-{% endif %}
+<div id="logo"><div>WFF planner</div></div>
 
-<div id="plan">
+<div id="logo-patch"></div>
+
+<div id="header">
+    <div class="facepile"><iframe src="http://www.facebook.com/plugins/facepile.php? 
+app_id={{ FACEBOOK_APP_ID }}" scrolling="no" frameborder="0" style="border:none;  
+overflow:hidden; width:240px; height:68px;" allowTransparency="true"></iframe></fb:facepile></div>
+
+    <div class="facebook-login">
+    <form action="{% url facebook_connect %}?facebook_login=1" method="post">
+	<a href="javascript:void(0);" style="font-size: 20px;" onclick="F.connect(this.parentNode);"><img src="{{ STATIC_URL }}img/fb-login.png"></a>
+	<input type="hidden" value="{{ request.path }}" name="next" />
+    </form>
+    </div>
+
+</div>
+
+<div id="rooms">
+    {% for room in calendar.rows %}
+    <div class="room2" style="height: {{ room.height }}px; top: {{ room.position }}px;"><span>{{ room.name }}</span>
+	{% for row in room.screenings %}
+	<div class="time"><b>{{ row.time }}</b></div>
+	{% endfor %}
+    </div>
+    {% endfor %}
+</div>
+
+<div id="schedule">
 <table cellspacing="0" cellpadding="0">
-    <tr><th class="room">&nbsp;</th><th>&nbsp;</th>
+    <tr>
 	{% for day in calendar.days %}
 	<th>{% cycle "piatek" "sobota" "niedziela" "poniedzialek" "wtorek" "sroda" "czwartek" %} {{ day }}.X</th>
 	{% endfor %}
     </tr>
-{% for row in calendar.rows %}
+{% for room in calendar.rows %}
+{% for row in room.screenings %}
 <tr>
-    <td class="room"><div>{% ifchanged row.room %}{{ row.room }}{% endifchanged %}</div></td>
-    <td>{{ row.time }}</td>
     {% for day in row.screenings %}
     <td>{% for screening in day %}
 	<div class="screening" id="{{ screening.id }}">
@@ -37,9 +60,13 @@
 
 </tr>
 {% endfor %}
+{% endfor %}
 </table>
 </div>
 <script>
-var MY_ID = "{{ social_auth.facebook.extra_data.id }}";
+var MY_ID = "{{ user.get_profile.facebook_id }}"
 </script>
+{% include 'django_facebook/_facebook_js.html' %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script type="text/javascript" src="/static/script.js"></script>
+

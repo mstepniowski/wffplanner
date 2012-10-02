@@ -62,11 +62,16 @@ class Calendar(object):
 
     def rows(self):
         result = []
+        position = 35
         for room in sorted(self.rooms()):
-            for (hour, minute), screenings in self.screenings_by_hour(room).items():
-                result.append({'room': room,
-                               'time': '%d:%d' % (hour, minute),
-                               'screenings': self.screenings_by_day(screenings)})
+            room_row = {'name': room, 'screenings': [], 'position': position}
+            for (hour, minute), screenings in sorted(self.screenings_by_hour(room).items()):
+                room_row['screenings'].append({'room': room,
+                                           'time': '%02d:%02d' % (hour, minute),
+                                           'screenings': self.screenings_by_day(screenings)})
+            room_row['height'] = len(self.screenings_by_hour(room)) * 100
+            position += room_row['height']
+            result.append(room_row)
         print result
         return result
 
