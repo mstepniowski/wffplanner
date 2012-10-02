@@ -32,7 +32,7 @@ def checkin(request, screening_id):
         Checkin.objects.create(user=request.user,
                                screening_id=int(screening_id),
                                facebook_id=social_auth.extra_data['id'])
-        graph.post('me/wffplanner:planning_to_cook',
+        graph.post('me/wffplanner:planning_to_watch',
                    movie='http://wffplanner.stepniowski.com/')
     
     return HttpResponse('OK')
