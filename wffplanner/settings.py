@@ -87,14 +87,14 @@ TEMPLATE_LOADERS = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.contrib.auth.context_processors.auth",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
-    "django.core.context_processors.media",
-    "django.core.context_processors.static",
-    "django.core.context_processors.tz",
-    "django.contrib.messages.context_processors.messages",
-    'social_auth.context_processors.social_auth_by_name_backends',
+    'django_facebook.context_processors.facebook',
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.core.context_processors.tz',
+    'django.contrib.messages.context_processors.messages',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -125,7 +125,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'south',
-    'social_auth',
+    'django_facebook',
     'movies',
 )
 
@@ -161,20 +161,21 @@ LOGGING = {
 
 # Social authentication settings
 AUTHENTICATION_BACKENDS = (
-    'social_auth.backends.facebook.FacebookBackend',
+    'django_facebook.auth_backends.FacebookBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
-SOCIAL_AUTH_ENABLED_BACKENDS = ('facebook',)
+AUTH_PROFILE_MODULE = 'django_facebook.FacebookProfile'
 
-LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/'
-SOCIAL_AUTH_BACKEND_ERROR_URL = '/accounts/social-error/'
 
-FACEBOOK_EXTENDED_PERMISSIONS = []
+# LOGIN_URL = '/login/'
+# LOGIN_REDIRECT_URL = '/'
+
+
+# FACEBOOK_EXTENDED_PERMISSIONS = []
 
 FACEBOOK_APP_ID = '542111425805166'
-FACEBOOK_API_SECRET = '078f173f43be3150aa550765cd91863b'
+FACEBOOK_APP_SECRET = '078f173f43be3150aa550765cd91863b'
 
 
 try:

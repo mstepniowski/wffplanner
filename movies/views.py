@@ -25,8 +25,8 @@ def calendar(request):
 @login_required
 @require_POST
 def checkin(request, screening_id):
-    social_auth = request.user.social_auth.get(provider='facebook')
-    graph = GraphAPI(social_auth.tokens['access_token'])
+    social_auth = request.user.get_profile()
+    graph = GraphAPI(social_auth.access_token)
 
     try:
         checkin = Checkin.objects.get(user=request.user,
@@ -35,7 +35,7 @@ def checkin(request, screening_id):
     except Checkin.DoesNotExist:
         Checkin.objects.create(user=request.user,
                                screening_id=int(screening_id),
-                               facebook_id=social_auth.extra_data['id'])
+                               facebook_id=social_auth.facebook_id)
         try:
             graph.post('me/wffplanner:planning_to_watch',
                        movie='http://wffplanner.stepniowski.com/')
@@ -47,8 +47,8 @@ def checkin(request, screening_id):
 
 @login_required
 def get_checkins(request):
-    social_auth = request.user.social_auth.get(provider='facebook')
-    graph = GraphAPI(social_auth.tokens['access_token'])
+    social_auth = request.user.get_profile()
+    graph = GraphAPI(social_auth.access_token)
     friends = sum([d['data'] for d in graph.get('me/friends', page=True)], [])
     friend_ids = [friend['id'] for friend in friends]
 

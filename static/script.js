@@ -65,4 +65,9 @@ $(function() {
         }
         $.post('checkins/' + $(this).attr('id') + '/');
     });
+
+    $('#schedule').scroll(function () {
+        console.log(this, $(this).scrollTop());
+        $('#rooms').scrollTop($(this).scrollTop());
+    });
 });
