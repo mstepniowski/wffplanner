@@ -15,8 +15,7 @@ a {
 td, th {
     border-right: 1px solid #999;
     border-bottom: 1px solid #999;
-    padding: 5px;
-    min-width: 150px;
+    padding: 0;
     background-color: #F3F3F3;
 }
 
@@ -41,10 +40,6 @@ th {
     color: #FFF;
 }
 
-.active {
-    background-color: red;
-}
-
 .avatar {
     width: 24px;
     height: 24px;
@@ -52,9 +47,9 @@ th {
     -moz-box-shadow: 2px 2px 4px #999;
     -webkit-box-shadow: 2px 2px 4px #999;
     box-shadow: 2px 2px 4px #999;;
-    -moz-transform: rotate(7deg);
-    -webkit-transform: rotate(7deg);
-    transform: rotate(7deg);
+    -moz-transform: rotate(5deg);
+    -webkit-transform: rotate(5deg);
+    transform: rotate(5deg);
 }
 
 .facebook-connect {
@@ -74,4 +69,33 @@ th {
 
 .facebook-connect p {
     margin: 0 0 0 242px;
+}
+
+.screening {
+    width: 140px;
+    height: 80px;
+    padding: 5px;
+    position: relative;
+}
+
+.screening.active {
+    background-color: #CCC;
+}
+
+.attendees {
+    position: absolute;
+    height: 28px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: auto;
+    z-index: 10;
+}
+
+.attendees img {
+    float: right;
+}
+
+.avatar.me {
+    border-color: yellow;
 }

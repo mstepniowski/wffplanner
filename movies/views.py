@@ -52,11 +52,11 @@ def get_checkins(request):
     friends = sum([d['data'] for d in graph.get('me/friends', page=True)], [])
     friend_ids = [friend['id'] for friend in friends]
 
-    friend_checkins = [{'facebook_id': ch.facebook_id, 'id': ch.screening_id} for
-                       ch in Checkin.objects.filter(facebook_id__in=friend_ids)]
+    friend_checkins = [{'facebook_id': ch.facebook_id, 'id': ch.screening_id}
+                       for ch in Checkin.objects.filter(facebook_id__in=friend_ids)]
     
     return HttpResponse(json.dumps({
-        'my_checkins': [checkin.screening_id for checkin 
-                        in Checkin.objects.filter(user=request.user)],
+        'my_checkins': [{'facebook_id': ch.facebook_id, 'id': ch.screening_id}
+                         for ch in Checkin.objects.filter(user=request.user)],
         'friend_checkins': friend_checkins
     }), mimetype='application/json')

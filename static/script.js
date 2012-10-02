@@ -48,21 +48,21 @@ $.ajaxSetup({
 
 $(function() {
     $.getJSON('checkins/', function (data) {
-        console.log(data);
         $.each(data.my_checkins, function () {
-            $('#' + this).addClass('active');
+            $('#' + this.id).addClass('active');
+            $('#' + this.id + ' .attendees').append('<img class="avatar me" src="//graph.facebook.com/' + this.facebook_id + '/picture" />');
         });
         $.each(data.friend_checkins, function () {
-            $('#' + this.id).append('<img class="avatar" src="//graph.facebook.com/' + this.facebook_id + '/picture" />');
+            $('#' + this.id + ' .attendees').append('<img class="avatar" src="//graph.facebook.com/' + this.facebook_id + '/picture" />');
         });
     });
 
     $('.screening').click(function () {
-        var el = $(this);
-        $.post('checkins/' + el.attr('id') + '/', function () {
-            console.log('active');
-            el.toggleClass('active');
-        });
-
+        if ($(this).hasClass('active')) {
+            $(this).removeClass('active').find('.me').remove();
+        } else {
+            $(this).addClass('active').find('.attendees').append('<img class="avatar me" src="//graph.facebook.com/' + MY_ID + '/picture" />');
+        }
+        $.post('checkins/' + $(this).attr('id') + '/');
     });
 });
