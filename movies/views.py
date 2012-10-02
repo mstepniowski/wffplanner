@@ -3,14 +3,14 @@ from facepy import GraphAPI
 
 from django.views.generic.simple import direct_to_template
 from django.views.decorators.http import require_POST
-from django.views.decorators.csrf import csrf_exempt, requires_csrf_token
+from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
 from movies.models import Calendar, Checkin
 
 
-@requires_csrf_token
+@ensure_csrf_cookie
 def calendar(request):
     c = Calendar()
     return direct_to_template(request,
@@ -21,15 +21,19 @@ def calendar(request):
 @login_required
 @require_POST
 def checkin(request, screening_id):
+    social_auth = request.user.social_auth.get(provider='facebook')
+    graph = GraphAPI(social_auth.tokens['access_token'])
+
     try:
         checkin = Checkin.objects.get(user=request.user,
                                       screening_id=int(screening_id))
         checkin.delete()
     except Checkin.DoesNotExist:
-        social_auth = request.user.social_auth.get(provider='facebook')
         Checkin.objects.create(user=request.user,
                                screening_id=int(screening_id),
                                facebook_id=social_auth.extra_data['id'])
+        graph.post('me/wffplanner:planning_to_cook',
+                   movie='http://wffplanner.stepniowski.com/')
     
     return HttpResponse('OK')
 

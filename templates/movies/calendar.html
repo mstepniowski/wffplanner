@@ -1,6 +1,14 @@
-<!html><title>WFF Planner</title>
-<link rel="stylesheet" href="/static/style.css" type="text/css" media="screen" />
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<!html>
+<head>
+    <title>WFF Planner</title>
+    <link rel="stylesheet" href="/static/style.css" type="text/css" media="screen" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <meta property="fb:app_id" content="542111425805166" />
+    <meta property="og:title" content="Warm Romantic Comedy" />
+    <meta property="og:image" content="https://s-static.ak.fbcdn.net/images/devsite/attachment_blank.png" />
+    <meta property="og:url" content="http://wffplanner.stepniowski.com/" />
+    <meta property="og:type" content="video.movie" />
+</head>
 
 {% if not social_auth.facebook %}
 <div class="facebook-connect"><a href="{% url socialauth_begin 'facebook' %}"><img src="/static/img/facebook-connect.png?dssa"></a> <p>to see screenings your friends are attending and set your own.</p></div>
