@@ -169,7 +169,7 @@ AUTH_PROFILE_MODULE = 'django_facebook.FacebookProfile'
 
 
 # LOGIN_URL = '/login/'
-# LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'
 
 
 # FACEBOOK_EXTENDED_PERMISSIONS = []
