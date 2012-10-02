@@ -1,13 +1,17 @@
 import json
+import logging
 from facepy import GraphAPI
 
 from django.views.generic.simple import direct_to_template
 from django.views.decorators.http import require_POST
-from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
 from movies.models import Calendar, Checkin
+
+
+logger = logging.getLogger('django')
 
 
 @ensure_csrf_cookie
@@ -32,8 +36,11 @@ def checkin(request, screening_id):
         Checkin.objects.create(user=request.user,
                                screening_id=int(screening_id),
                                facebook_id=social_auth.extra_data['id'])
-        graph.post('me/wffplanner:planning_to_watch',
-                   movie='http://wffplanner.stepniowski.com/')
+        try:
+            graph.post('me/wffplanner:planning_to_watch',
+                       movie='http://wffplanner.stepniowski.com/')
+        except:
+            logging.exception('Error when posting to OpenGraph')
     
     return HttpResponse('OK')
 
