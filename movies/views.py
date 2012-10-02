@@ -3,12 +3,14 @@ from facepy import GraphAPI
 
 from django.views.generic.simple import direct_to_template
 from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt, requires_csrf_token
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
 from movies.models import Calendar, Checkin
 
 
+@requires_csrf_token
 def calendar(request):
     c = Calendar()
     return direct_to_template(request,
