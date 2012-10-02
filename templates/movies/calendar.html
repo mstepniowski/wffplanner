@@ -54,6 +54,8 @@ overflow:hidden; width:240px; height:68px;" allowTransparency="true"></iframe></
 	    <a href="{{ screening.movie.url }}">{{ screening.movie.title }}</a>
 	    <div class="attendees"></div>
 	</div>
+	{% empty %}
+	&nbsp;
 	{% endfor %}
     </td>
     {% endfor %}
