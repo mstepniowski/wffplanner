@@ -1,6 +1,9 @@
 body {
     font: 11px Georgia;
     color: #333;
+    padding: 0;
+    margin: 0;
+    background-color: white;
 }
 
 a {
@@ -9,21 +12,54 @@ a {
     text-decoration: none;
 }
 
-table td {
-    border-right: 1px solid #333;
-    border-bottom: 1px solid #333;
+td, th {
+    border-right: 1px solid #777;
+    border-bottom: 1px solid #777;
     padding: 5px;
-    width: 160px;
+    min-width: 150px;
+    background-color: #F3F3F3;
+}
+
+th {
+    font-weight: bold;
+}
+
+#plan {
+    width: none;
+    overflow: scroll;
+    border-top: 5px solid #EEE;
+
 }
 
 .room {
-    transform: rotate(90deg);
-    -webkit-transform: rotate(90deg);
+    /* transform: rotate(90deg); */
+    /* -webkit-transform: rotate(90deg); */
     width: 140px;
     font-size: 17px;
     font-weight: bold;
+    background-color: #999;
+    color: #FFF;
 }
 
 .active {
     background-color: red;
+}
+
+.facebook-connect {
+    background-color: white;
+    color: #999;
+    line-height: 40px;
+    padding: 10px;
+    margin: 0;
+    font-size: 21px;
+    text-shadow: 1px 1px #EEE;
+    
+}
+
+.facebook-connect a {
+    float: left;
+}
+
+.facebook-connect p {
+    margin: 0 0 0 242px;
 }

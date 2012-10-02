@@ -3,18 +3,19 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 
 {% if not social_auth.facebook %}
-<a href={% url socialauth_begin "facebook" %}>Zaloguj</a>
+<div class="facebook-connect"><a href="{% url socialauth_begin 'facebook' %}"><img src="/static/img/facebook-connect.png?dssa"></a> <p>to see screenings your friends are attending and set your own.</p></div>
 {% endif %}
 
+<div id="plan">
 <table cellspacing="0" cellpadding="0">
-    <tr><td>&nbsp;</td><td>&nbsp;</td>
+    <tr><th class="room">&nbsp;</th><th>&nbsp;</th>
 	{% for day in calendar.days %}
-	<td>{{ day }}</td>
+	<th>{% cycle "piatek" "sobota" "niedziela" "poniedzialek" "wtorek" "sroda" "czwartek" %} {{ day }}.X</th>
 	{% endfor %}
     </tr>
 {% for row in calendar.rows %}
 <tr>
-    <td><div class="room">{% ifchanged row.room %}{{ row.room }}{% endifchanged %}</div></td>
+    <td class="room"><div>{% ifchanged row.room %}{{ row.room }}{% endifchanged %}</div></td>
     <td>{{ row.time }}</td>
     {% for day in row.screenings %}
     <td>{% for screening in day %}
@@ -28,5 +29,5 @@
 </tr>
 {% endfor %}
 </table>
-
+</div>
 <script type="text/javascript" src="/static/script.js"></script>
