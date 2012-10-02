@@ -11,9 +11,6 @@ SITE_ROOT = 'http://www.wff.pl/filmy/'
 
 class Command(BaseCommand):
     def handle(self, *file_names, **options):
-        Movie.objects.all().delete()
-        Screening.objects.all().delete()
-
         movies = {}
         for file_name in file_names:
             print file_name
@@ -43,7 +40,7 @@ class Command(BaseCommand):
         for element in elements:
             parts = [(e.tail or '').strip() for e in element]
             hour, minute = parts[2].split('.')
-            Screening.objects.create(
+            Screening.objects.get_or_create(
                 movie=movie,
                 date=datetime(2012, 10, int(parts[1].split(' ')[0]), int(hour), int(minute)),
                 room=element.text.strip())
