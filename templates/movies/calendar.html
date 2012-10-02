@@ -29,6 +29,7 @@
     <td>{% for screening in day %}
 	<div class="screening" id="{{ screening.id }}">
 	    <a href="{{ screening.movie.url }}">{{ screening.movie.title }}</a>
+	    <div class="attendees"></div>
 	</div>
 	{% endfor %}
     </td>
@@ -38,4 +39,7 @@
 {% endfor %}
 </table>
 </div>
+<script>
+var MY_ID = "{{ social_auth.facebook.extra_data.id }}";
+</script>
 <script type="text/javascript" src="/static/script.js"></script>
