@@ -1,6 +1,6 @@
 import json
 import logging
-from facepy import GraphAPI
+from facepy import GraphAPI, exceptions
 
 from django.views.generic.simple import direct_to_template
 from django.views.decorators.http import require_POST
@@ -39,8 +39,11 @@ def checkin(request, screening_id):
         try:
             graph.post('me/wffplanner:planning_to_watch',
                        movie='http://wffplanner.stepniowski.com/')
+        except exceptions.FacebookError, e:
+            logging.exception('Error when posting to OpenGraph: %s' % e.message)
         except:
             logging.exception('Error when posting to OpenGraph')
+            
     
     return HttpResponse('OK')
 
