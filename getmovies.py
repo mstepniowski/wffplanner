@@ -7,7 +7,7 @@ SITE_ROOT = 'http://www.wff.pl'
 
 
 def alphabet():
-    for x in range(ord('a'), ord('z')):
+    for x in range(ord('a'), ord('z') + 1):
         yield chr(x)
 
 
