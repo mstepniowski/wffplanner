@@ -25,7 +25,7 @@ overflow:hidden; width:240px; height:68px;" allowTransparency="true"></iframe></
     <p style="margin-left: 180px; height: 60px; width: 640px">Klikaj lewym przyciskiem myszy aby zaznaczyć seanse, na które zamierzasz się wybrać.<br>Te informacje będą od razu widoczne dla Twoich znajomych.</p>
     {% else %}
     <div class="facebook-login">
-    <form action="{% url facebook_connect %}?facebook_login=1" method="post">
+    <form action="{% url facebook_connect %}?facebook_login=1&next={{ request.path }}" method="post">
 	<a href="javascript:void(0);" onclick="F.connect(this.parentNode);" class="facebook-connect"><img src="{{ STATIC_URL }}img/fb-login.png"></a> <p>aby zobaczyć, na jakie seanse wybierają się Twoi znajomi, a także przygotować własny plan.
 	<input type="hidden" value="{{ request.path }}" name="next" />
     </form>
