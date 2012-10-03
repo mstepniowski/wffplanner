@@ -12,7 +12,6 @@ urlpatterns = patterns('',
     url(r'^checkins/$', 'movies.views.get_checkins'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^facebook/', include('django_facebook.urls')),
-    url(r'^accounts/', include('django_facebook.auth_urls')),
 )
 
 urlpatterns += staticfiles_urlpatterns()
