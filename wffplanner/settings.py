@@ -178,6 +178,8 @@ FACEBOOK_APP_ID = '542111425805166'
 FACEBOOK_APP_SECRET = '078f173f43be3150aa550765cd91863b'
 FACEBOOK_DEFAULT_SCOPE = ['email', 'user_about_me', 'user_birthday', 'user_website', 'publish_actions']
 FACEBOOK_STORE_LOCAL_IMAGE = False
+FACEBOOK_HIDE_CONNECT_TEST = True
+
 
 try:
     from localsettings import *

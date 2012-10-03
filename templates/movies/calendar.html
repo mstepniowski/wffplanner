@@ -17,17 +17,20 @@
 <div id="logo-patch"></div>
 
 <div id="header">
-    <div class="facepile"><iframe src="http://www.facebook.com/plugins/facepile.php? 
+        <div class="facepile"><iframe src="http://www.facebook.com/plugins/facepile.php? 
 app_id={{ FACEBOOK_APP_ID }}" scrolling="no" frameborder="0" style="border:none;  
-overflow:hidden; width:240px; height:68px;" allowTransparency="true"></iframe></fb:facepile></div>
+overflow:hidden; width:240px; height:68px;" allowTransparency="true"></iframe></div>
 
+    {% if user.get_profile.facebook_id %}
+    <p style="margin-left: 180px; height: 60px; width: 640px">Klikaj lewym przyciskiem myszy aby zaznaczyć seanse, na które zamierzasz się wybrać.<br>Te informacje będą od razu widoczne dla Twoich znajomych.</p>
+    {% else %}
     <div class="facebook-login">
-    <form action="{% url facebook_connect %}?facebook_login=1" method="post">
-	<a href="javascript:void(0);" style="font-size: 20px;" onclick="F.connect(this.parentNode);"><img src="{{ STATIC_URL }}img/fb-login.png"></a>
+    <form action="{% url facebook_connect %}?facebook_login=1&next={{ request.path }}" method="post">
+	<a href="javascript:void(0);" onclick="F.connect(this.parentNode);" class="facebook-connect"><img src="{{ STATIC_URL }}img/fb-login.png"></a> <p>aby zobaczyć, na jakie seanse wybierają się Twoi znajomi, a także przygotować własny plan.
 	<input type="hidden" value="{{ request.path }}" name="next" />
     </form>
     </div>
-
+    {% endif %}
 </div>
 
 <div id="rooms">
@@ -44,7 +47,7 @@ overflow:hidden; width:240px; height:68px;" allowTransparency="true"></iframe></
 <table cellspacing="0" cellpadding="0">
     <tr>
 	{% for day in calendar.days %}
-	<th>{% cycle "piatek" "sobota" "niedziela" "poniedzialek" "wtorek" "sroda" "czwartek" %} {{ day }}.X</th>
+	<th>{% cycle "piątek" "sobota" "niedziela" "poniedziałek" "wtorek" "środa" "czwartek" %} {{ day }}.X</th>
 	{% endfor %}
     </tr>
 {% for room in calendar.rows %}
