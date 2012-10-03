@@ -58,7 +58,6 @@ th {
     position: absolute;
     top: 10px;
     left: 180px;
-    width: 200px;
 }
 
 #logo {
@@ -104,10 +103,20 @@ th {
     border: 1px solid #999;
     
     background-color: white;
-    color: #999;
-    line-height: 40px;
-    font-size: 21px;
+    color: #333;
+    line-height: 28px;
+    font-size: 16px;
     text-shadow: 1px 1px #EEE;   
+}
+
+.facebook-connect {
+    float: left;
+}
+
+#header p {
+    margin: 0 0 0 120px;
+    padding: 0;
+    width: 480px;
 }
 
 #schedule {
