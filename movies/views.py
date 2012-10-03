@@ -32,7 +32,7 @@ def checkin(request, screening_id):
     try:
         checkin = Checkin.objects.get(user=request.user,
                                       screening_id=int(screening_id))
-        checkin.screening.update(attendees_count=F('attendees_count') - 1)
+        Screening.objects.filter(id=int(screening_id)).update(attendees_count=F('attendees_count') - 1)
         checkin.delete()
     except Checkin.DoesNotExist:
         Checkin.objects.create(user=request.user,
