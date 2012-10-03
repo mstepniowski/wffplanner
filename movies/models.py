@@ -20,7 +20,8 @@ class Screening(models.Model):
     movie = models.ForeignKey(Movie)
     date = models.DateTimeField(null=False)
     room = models.CharField(max_length=250, null=False, blank=False)
-
+    attendees_count = models.IntegerField(null=False, blank=False, default=0)
+    
     def __unicode__(self):
         return u'%s: %s %s' % (self.movie.title, self.room, self.date)
 
