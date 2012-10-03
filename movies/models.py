@@ -63,7 +63,7 @@ class Calendar(object):
     def rows(self):
         result = []
         position = 35
-        for room in sorted(self.rooms()):
+        for room in self.sort_rooms(self.rooms()):
             room_row = {'name': room, 'screenings': [], 'position': position}
             for (hour, minute), screenings in sorted(self.screenings_by_hour(room).items()):
                 room_row['screenings'].append({'room': room,
@@ -81,6 +81,11 @@ class Calendar(object):
         for day in sorted(self.days()):
             yield result[day]
 
-            
-                                             
+    def sort_rooms(self, rooms):
+        result = []
+        # Multikino goes first
+        result.extend(sorted(room for room in rooms if room.startswith('MULTIKINO')))
+        # ...then the rest
+        result.extend(sorted(room for room in rooms if not room.startswith('MULTIKINO')))
+        return result
     
