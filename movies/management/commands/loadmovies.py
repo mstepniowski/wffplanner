@@ -18,7 +18,6 @@ class Command(BaseCommand):
             movie, _ = Movie.objects.get_or_create(url=SITE_ROOT + file_name.split('/')[-1] + '/')
             movie.title = document.getroot().cssselect('.tytul.zloty')[0].text
             movie.info = self.load_extra_info(document.getroot())
-            movie.collection_id = None
             movie.save()
             movies[movie.title] = movie
             self.load_screenings(movie, document.getroot())
