@@ -72,7 +72,6 @@ class Calendar(object):
             room_row['height'] = len(self.screenings_by_hour(room)) * 100
             position += room_row['height']
             result.append(room_row)
-        print result
         return result
 
     def screenings_by_day(self, screenings):
