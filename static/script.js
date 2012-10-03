@@ -67,7 +67,6 @@ $(function() {
     });
 
     $('#schedule').scroll(function () {
-        console.log(this, $(this).scrollTop());
         $('#rooms').scrollTop($(this).scrollTop());
     });
 });
