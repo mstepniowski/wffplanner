@@ -5,6 +5,7 @@ from facepy import GraphAPI, exceptions
 from django.views.generic.simple import direct_to_template
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.db.models import F
@@ -25,6 +26,7 @@ def calendar(request):
 
 @login_required
 @require_POST
+@never_cache
 def checkin(request, screening_id):
     social_auth = request.user.get_profile()
     graph = GraphAPI(social_auth.access_token)
@@ -52,7 +54,7 @@ def checkin(request, screening_id):
     return HttpResponse('OK')
 
 
-
+@never_cache
 def get_checkins(request):
     if not request.user.is_authenticated():
         return HttpResponse(json.dumps({'my_checkins': [], 'friend_checkins': []}),
