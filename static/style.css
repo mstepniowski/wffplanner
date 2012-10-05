@@ -231,3 +231,25 @@ th {
     color: #FFF;
     font-size: 24px;
 }
+
+#facebook-share img {
+    float: left;
+}
+
+#facebook-share {
+    cursor: pointer;
+    width: 260px;
+    border: 1px solid #CCC;
+    background-color: #EEE;
+    padding: 2px;
+    margin-top: -2px;
+}
+
+#facebook-share:hover {
+    background-color: #DDD;
+}
+
+#facebook-share p {
+    margin-left: 35px;
+    width: 220px;
+}

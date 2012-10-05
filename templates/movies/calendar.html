@@ -28,13 +28,14 @@
 <div id="logo-patch"></div>
 
 <div id="header">
-        <div class="facepile"><iframe src="http://www.facebook.com/plugins/facepile.php? 
+    {% if user.get_profile.facebook_id %}
+    <div class="facepile" id="facebook-share"><img src="{{ STATIC_URL }}img/fb-share.png" style="float: left"><p>Opublikuj swój harmonogram na Facebooku</p></div>
+    <p style="margin-left: 180px; height: 60px; width: 640px">Klikaj lewym przyciskiem myszy aby zaznaczyć seanse, na które zamierzasz się wybrać.<br>Te informacje będą od razu widoczne dla Twoich znajomych.</p>
+    {% else %}
+    <div class="facepile"><iframe src="http://www.facebook.com/plugins/facepile.php? 
 app_id={{ FACEBOOK_APP_ID }}" scrolling="no" frameborder="0" style="border:none;  
 overflow:hidden; width:240px; height:68px;" allowTransparency="true"></iframe></div>
 
-    {% if user.get_profile.facebook_id %}
-    <p style="margin-left: 180px; height: 60px; width: 640px">Klikaj lewym przyciskiem myszy aby zaznaczyć seanse, na które zamierzasz się wybrać.<br>Te informacje będą od razu widoczne dla Twoich znajomych.</p>
-    {% else %}
     <div class="facebook-login">
     <form action="{% url facebook_connect %}?facebook_login=1&next={{ request.path }}" method="post">
 	<a href="javascript:void(0);" onclick="F.connect(this.parentNode);" class="facebook-connect"><img src="{{ STATIC_URL }}img/fb-login.png"></a> <p>aby zobaczyć, na jakie seanse wybierają się Twoi znajomi, a także przygotować własny plan.
@@ -86,5 +87,5 @@ var MY_ID = "{{ user.get_profile.facebook_id }}"
 </script>
 {% include 'django_facebook/_facebook_js.html' %}
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-<script type="text/javascript" src="/static/script.js?cachebuster1"></script>
+<script type="text/javascript" src="/static/script.js?cachebuster2"></script>
 

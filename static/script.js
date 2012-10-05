@@ -1,3 +1,5 @@
+var screenings = '';
+
 // Django CSRF magic
 function getCookie(name) {
     var i;
@@ -75,6 +77,8 @@ $(function() {
         });
     });
 
+    $.get('/screenings/', function (text) { screenings = text; });
+    
     $('.screening').click(function () {
         if ($(this).hasClass('active')) {
             $(this).removeClass('active').find('.me').remove();
@@ -82,9 +86,24 @@ $(function() {
             $(this).addClass('active').find('.attendees').append('<img class="avatar me" src="//graph.facebook.com/' + MY_ID + '/picture" />');
         }
         $.post('checkins/' + $(this).attr('id') + '/');
+        $.get('/screenings/', function (text) { screenings = text; });
     });
 
     $('#schedule').scroll(function () {
         $('#rooms').scrollTop($(this).scrollTop());
     });
+
+    $('#facebook-share').click(function () {
+        FB.ui({
+            method: 'feed',
+            link: 'http://wffplanner.stepniowski.com/',
+            picture: 'http://wffplanner.stepniowski.com/static/wffplanner.png',
+            name: 'Mój harmonogram na Warsaw Film Festival',
+            description: screenings
+        }, function () {
+            _gaq.push(['_trackSocial', 'facebook', 'send']);
+        });
+    });
 });
+
+

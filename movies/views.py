@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import json
 import logging
 from facepy import GraphAPI, exceptions
@@ -73,3 +74,24 @@ def get_checkins(request):
                          for ch in Checkin.objects.filter(user=request.user)],
         'friend_checkins': friend_checkins
     }), mimetype='application/json')
+
+
+WEEKDAYS = [u"poniedziałek", "wtorek", u"środa", "czwartek", u"piątek", "sobota", "niedziela"]
+
+
+@login_required
+@never_cache
+def screening_list(request):
+    if not request.user.is_authenticated():
+        return HttpResponse('')
+
+    result = []
+    screenings = Screening.objects.filter(checkin__user=request.user).select_related('movie')
+    for screening in sorted(screenings, key=lambda screening: (screening.date, screening.room)):
+        result.append(u"%s, %s (%s) — %s" % (WEEKDAYS[screening.date.weekday()],
+                                            screening.date.strftime('%d.X %H:%M'),
+                                            screening.room,
+                                            screening.movie.title))
+    return HttpResponse('<br>\n<center></center>'.join(result))
+            
+    
