@@ -1,3 +1,6 @@
+import datetime
+import re
+import vobject
 from collections import defaultdict
 
 from django.db import models
@@ -90,3 +93,58 @@ class Calendar(object):
         result.extend(sorted(room for room in rooms if not room.startswith('MULTIKINO')))
         return result
     
+
+def generate_ical_feed(user):
+    """Returns an iCal feed for passed in user."""
+    return generate_ical([{'name': screening.movie.title,
+                           'description': screening.movie.info['description'],
+                           'room': screening.room,
+                           'dtstart': screening.date,
+                           'dtend': screening.date + datetime.timedelta(minutes=screening.movie.info['duration'])}
+                          for screening in Screening.objects.filter(checkin__user=user)])
+
+
+def generate_uid(event):
+    name = re.sub(r'[^a-zA-Z0-9-.]', '-', event['name'].lower())
+    room = re.sub(r'[^a-zA-Z0-9-.]', '-', event['room'].lower())
+    return 'wff-2012-' + name + '-' + room + '-' + str(event['dtstart'].day) + '-' + str(event['dtstart'].hour)
+
+                        
+def generate_ical(events,
+                  get_uid=generate_uid,
+                  tz=vobject.icalendar.utc):
+    """Generates an iCalendar feed for a list of `events`. After
+    saving the feed to a file, it can be imported directly to iCal,
+    Outlook, Google Calendar and other calendaring programs. Users can
+    also subscribe to such feed via URL. The file will then be
+    downloaded regularly and the calendar will be automatically
+    updated.
+
+    Each event should be a dict with "name", "speaker", "description",
+    "dtstart" and "dtend" keys. All dates should be in UTC timezone.
+    Example::
+
+        {'name': 'Good API design',
+        'description': '...',
+        'dtstart': datetime.datetime(2011, 6, 20, 9, 30),
+        'dtend': datetime.datetime(2011, 6, 20, 10, 30)}
+
+    A unique identificator for each event is generated using `get_uid`
+    function (by default it's a slug of the title). The UID is used
+    when the user subscribes to the calendar to identify the events
+    that should be updated.
+    """
+    calendar = vobject.iCalendar()
+    for event in events:
+        vevent = calendar.add('vevent')
+        
+        vevent.add('summary').value = event['name']
+        vevent.add('description').value = event['description']
+        vevent.add('dtstart').value = event['dtstart'].replace(tzinfo=tz)
+        vevent.add('dtend').value = event['dtend'].replace(tzinfo=tz)
+        vevent.add('uid').value = get_uid(event)
+        vevent.add('uri').value = 'http://wffplanner.stepniowski.com/'
+        vevent.add('location').value = event['room']
+    
+    calendar.add('X-WR-CALNAME').value = 'Warsaw Film Festival'
+    return calendar.serialize()

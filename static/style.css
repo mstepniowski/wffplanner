@@ -236,20 +236,27 @@ th {
     float: left;
 }
 
-#facebook-share {
+#facebook-share, #ical {
     cursor: pointer;
     width: 260px;
     border: 1px solid #CCC;
     background-color: #EEE;
-    padding: 2px;
+    padding: 3px;
     margin-top: -2px;
+    font-size: 13px;
 }
 
-#facebook-share:hover {
+#facebook-share:hover, #ical:hover {
     background-color: #DDD;
 }
 
-#facebook-share p {
+#facebook-share p, #ical p {
     margin-left: 35px;
     width: 220px;
+}
+
+#facebook-share img, #ical img {
+    float: left;
+    width: 26px;
+    height: 26px;
 }

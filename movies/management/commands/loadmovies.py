@@ -32,6 +32,8 @@ class Command(BaseCommand):
             label = row.cssselect('span.zloty')
             if len(label) > 0 and label[0].text.strip() == 'Film w zestawie:':
                 info['collection'] = row.cssselect('a')[0].text.strip()
+            if len(label) > 0 and label[0].text.strip() == 'Czas trwania:':
+                info['duration'] = int(label[0].tail.strip()[:-3])
         return info
     
     def load_screenings(self, movie, root):

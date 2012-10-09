@@ -104,6 +104,11 @@ $(function() {
             _gaq.push(['_trackSocial', 'facebook', 'send']);
         });
     });
+
+    $('#ical').click(function () {
+        _gaq.push(['_trackEvent', 'calendar', 'download']);
+        document.location.href = $(this).attr('href');
+    });
 });
 
 

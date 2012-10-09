@@ -6,3 +6,5 @@ facepy
 lxml
 django_facebook==4.2.1
 PIL
+oauth==1.0.1
+vobject

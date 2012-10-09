@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import hmac
 import json
 import logging
 from facepy import GraphAPI, exceptions
@@ -8,21 +9,34 @@ from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.db.models import F
+from django.contrib.auth.models import User
+from django.conf import settings
+from django.core.urlresolvers import reverse
 
-from movies.models import Calendar, Checkin, Screening
+from movies.models import Calendar, Checkin, Screening, generate_ical_feed
 
 
 logger = logging.getLogger('django')
 
 
+def hexdigest(user_id):
+    digest_maker = hmac.new(settings.SECRET_KEY)
+    digest_maker.update(str(user_id))
+    return digest_maker.hexdigest()
+
+    
 @ensure_csrf_cookie
 def calendar(request):
     c = Calendar()
+    if request.user.is_authenticated():
+        ical_url = reverse('ical', kwargs={'user_id': request.user.pk, 'security_hash': hexdigest(request.user.pk)})
+    else:
+        ical_url = ''
     return direct_to_template(request,
                               template='movies/calendar.html',
-                              extra_context={'calendar': c})
+                              extra_context={'calendar': c, 'ical_url': ical_url})
 
 
 @login_required
@@ -50,7 +64,6 @@ def checkin(request, screening_id):
             logging.exception('Error when posting to OpenGraph: %s' % e.message)
         except:
             logging.exception('Error when posting to OpenGraph')
-            
     
     return HttpResponse('OK')
 
@@ -93,5 +106,15 @@ def screening_list(request):
                                             screening.room,
                                             screening.movie.title))
     return HttpResponse('<br>\n<center></center>'.join(result))
-            
+
+
+def cal(request, user_id, security_hash):
+    if hexdigest(user_id) != security_hash:
+        raise Http404
     
+    try:
+        user = User.objects.get(pk = user_id)
+    except User.DoesNotExist:
+        raise Http404
+    
+    return HttpResponse(generate_ical_feed(user), 'text/calendar')

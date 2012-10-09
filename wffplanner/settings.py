@@ -180,6 +180,9 @@ FACEBOOK_DEFAULT_SCOPE = ['email', 'user_about_me', 'user_birthday', 'user_websi
 FACEBOOK_STORE_LOCAL_IMAGE = False
 FACEBOOK_HIDE_CONNECT_TEST = True
 
+FILMASTER_APP_ID = 'BRaYcnWyqMmZa2f7sM'
+FILMASTER_APP_SECRET = 'VQ3XV3SVpd9Up8JfcSW3Qj7nKtv4zBWq'
+
 
 try:
     from localsettings import *

@@ -29,7 +29,14 @@
 
 <div id="header">
     {% if user.get_profile.facebook_id %}
-    <div class="facepile" id="facebook-share"><img src="{{ STATIC_URL }}img/fb-share.png" style="float: left"><p>Opublikuj swój harmonogram na Facebooku</p></div>
+    <div class="facepile">
+	<div id="facebook-share">
+	    <img src="{{ STATIC_URL }}img/fb-share2.png"><p>Podziel się swoim harmonogramem</p>
+	</div>
+	<div id="ical" href="{{ ical_url }}">
+    	     <img src="{{ STATIC_URL }}img/cal.png"><p>Pobierz plik iCal</p>
+	</div>
+    </div>
     <p style="margin-left: 180px; height: 60px; width: 640px">Klikaj lewym przyciskiem myszy aby zaznaczyć seanse, na które zamierzasz się wybrać.<br>Te informacje będą od razu widoczne dla Twoich znajomych.</p>
     {% else %}
     <div class="facepile"><iframe src="http://www.facebook.com/plugins/facepile.php? 

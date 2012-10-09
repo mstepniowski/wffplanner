@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^screenings/$', 'movies.views.screening_list'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^facebook/', include('django_facebook.urls')),
+    url(r'^cal/(?P<user_id>[0-9]+)/(?P<security_hash>[a-z0-9]+)/wff.ics', 'movies.views.cal', name='ical'),
 )
 
 urlpatterns += staticfiles_urlpatterns()
