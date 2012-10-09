@@ -2,11 +2,13 @@ import datetime
 import re
 import vobject
 from collections import defaultdict
+from dateutil import tz
 
 from django.db import models
 from django.contrib.auth.models import User
 
 from movies.fields import JSONField
+
 
 
 class Movie(models.Model):
@@ -110,9 +112,7 @@ def generate_uid(event):
     return 'wff-2012-' + name + '-' + room + '-' + str(event['dtstart'].day) + '-' + str(event['dtstart'].hour)
 
                         
-def generate_ical(events,
-                  get_uid=generate_uid,
-                  tz=vobject.icalendar.utc):
+def generate_ical(events, get_uid=generate_uid):
     """Generates an iCalendar feed for a list of `events`. After
     saving the feed to a file, it can be imported directly to iCal,
     Outlook, Google Calendar and other calendaring programs. Users can
@@ -134,14 +134,15 @@ def generate_ical(events,
     when the user subscribes to the calendar to identify the events
     that should be updated.
     """
+    timezone = tz.gettz('Europe/Warsaw')
     calendar = vobject.iCalendar()
     for event in events:
         vevent = calendar.add('vevent')
         
         vevent.add('summary').value = event['name']
         vevent.add('description').value = event['description']
-        vevent.add('dtstart').value = event['dtstart'].replace(tzinfo=tz)
-        vevent.add('dtend').value = event['dtend'].replace(tzinfo=tz)
+        vevent.add('dtstart').value = event['dtstart'].replace(tzinfo=timezone)
+        vevent.add('dtend').value = event['dtend'].replace(tzinfo=timezone)
         vevent.add('uid').value = get_uid(event)
         vevent.add('uri').value = 'http://wffplanner.stepniowski.com/'
         vevent.add('location').value = event['room']

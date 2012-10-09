@@ -2,6 +2,7 @@
 import hmac
 import json
 import logging
+import time
 from facepy import GraphAPI, exceptions
 
 from django.views.generic.simple import direct_to_template
