@@ -2,7 +2,6 @@
 import hmac
 import json
 import logging
-import time
 from facepy import GraphAPI, exceptions
 
 from django.views.generic.simple import direct_to_template
@@ -118,4 +117,7 @@ def cal(request, user_id, security_hash):
     except User.DoesNotExist:
         raise Http404
     
-    return HttpResponse(generate_ical_feed(user), 'text/calendar')
+    response = HttpResponse(generate_ical_feed(user), 'text/calendar')
+    response['Filename'] = 'wff.ics'
+    response['Content-Disposition'] = 'attachment; filename=wff.ics'
+    return response

@@ -143,9 +143,11 @@ def generate_ical(events, get_uid=generate_uid):
         vevent.add('description').value = event['description']
         vevent.add('dtstart').value = event['dtstart'].replace(tzinfo=timezone)
         vevent.add('dtend').value = event['dtend'].replace(tzinfo=timezone)
+        vevent.add('dtstamp').value = datetime.datetime.now().replace(tzinfo=timezone)
         vevent.add('uid').value = get_uid(event)
         vevent.add('uri').value = 'http://wffplanner.stepniowski.com/'
         vevent.add('location').value = event['room']
     
     calendar.add('X-WR-CALNAME').value = 'Warsaw Film Festival'
+    
     return calendar.serialize()
