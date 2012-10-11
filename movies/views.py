@@ -44,26 +44,36 @@ def calendar(request):
 @never_cache
 def checkin(request, screening_id):
     social_auth = request.user.get_profile()
-    graph = GraphAPI(social_auth.access_token)
+    Checkin.objects.create(user=request.user,
+                           screening_id=int(screening_id),
+                           facebook_id=social_auth.facebook_id)
+    Screening.objects.filter(id=int(screening_id)).update(attendees_count=F('attendees_count') + 1)
+    
+    # TODO: Post to OpenGraph
+    # graph = GraphAPI(social_auth.access_token)
+    # try:
+    #     graph.post('me/wffplanner:planning_to_watch',
+    #                movie='http://wffplanner.stepniowski.com/')
+    # except exceptions.FacebookError, e:
+    #     logging.exception('Error when posting to OpenGraph: %s' % e.message)
+    # except:
+    #     logging.exception('Error when posting to OpenGraph')
+    
+    return HttpResponse('OK')
 
+
+@login_required
+@require_POST
+@never_cache
+def checkout(request, screening_id):
     try:
         checkin = Checkin.objects.get(user=request.user,
                                       screening_id=int(screening_id))
         Screening.objects.filter(id=int(screening_id)).update(attendees_count=F('attendees_count') - 1)
         checkin.delete()
+        # TODO: Remove from OpenGraph
     except Checkin.DoesNotExist:
-        Checkin.objects.create(user=request.user,
-                               screening_id=int(screening_id),
-                               facebook_id=social_auth.facebook_id)
-        Screening.objects.filter(id=int(screening_id)).update(
-            attendees_count=F('attendees_count') + 1)
-        try:
-            graph.post('me/wffplanner:planning_to_watch',
-                       movie='http://wffplanner.stepniowski.com/')
-        except exceptions.FacebookError, e:
-            logging.exception('Error when posting to OpenGraph: %s' % e.message)
-        except:
-            logging.exception('Error when posting to OpenGraph')
+        pass
     
     return HttpResponse('OK')
 

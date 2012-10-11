@@ -50,7 +50,7 @@ $.ajaxSetup({
 
 $(function() {
     $.ajax({
-        url: 'checkins/',
+        url: '/checkins/',
         cache: false,
         dataType: 'json',
         success: function (data) {
@@ -87,10 +87,11 @@ $(function() {
     $('.screening').click(function () {
         if ($(this).hasClass('active')) {
             $(this).removeClass('active').find('.me').remove();
+            $.post('/checkout/' + $(this).attr('id') + '/');
         } else {
             $(this).addClass('active').find('.attendees').append('<img class="avatar me" src="//graph.facebook.com/' + MY_ID + '/picture" />');
+            $.post('/checkin/' + $(this).attr('id') + '/');
         }
-        $.post('checkins/' + $(this).attr('id') + '/');
         $.get('/screenings/', function (text) { screenings = text; });
     });
 
