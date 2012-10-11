@@ -49,32 +49,37 @@ $.ajaxSetup({
 
 
 $(function() {
-    $.getJSON('checkins/', function (data) {
-        $.each(data.my_checkins, function () {
-            $('#' + this.id).addClass('active');
-            $('#' + this.id + ' .attendees').append('<img class="avatar me" src="//graph.facebook.com/' + this.facebook_id + '/picture" />');
-            var attendees_count = parseInt($('#' + this.id + ' .count').text(), 10);
-            attendees_count--;
-            if (attendees_count === 0) {
-                $('#' + this.id + ' .count').remove();
-            } else {
-                $('#' + this.id + ' .count').text(attendees_count);
-            }
-        });
-        $.each(data.friend_checkins, function () {
-            $('#' + this.id + ' .attendees').append('<img class="avatar" src="//graph.facebook.com/' + this.facebook_id + '/picture" />');
-            var attendees_count = parseInt($('#' + this.id + ' .count').text(), 10);
-            attendees_count--;
-            if (attendees_count === 0) {
-                $('#' + this.id + ' .count').remove();
-            } else {
-                $('#' + this.id + ' .count').text(attendees_count);
-            }
-        });
+    $.ajax({
+        url: 'checkins/',
+        cache: false,
+        dataType: 'json',
+        success: function (data) {
+            $.each(data.my_checkins, function () {
+                $('#' + this.id).addClass('active');
+                $('#' + this.id + ' .attendees').append('<img class="avatar me" src="//graph.facebook.com/' + this.facebook_id + '/picture" />');
+                var attendees_count = parseInt($('#' + this.id + ' .count').text(), 10);
+                attendees_count--;
+                if (attendees_count === 0) {
+                    $('#' + this.id + ' .count').remove();
+                } else {
+                    $('#' + this.id + ' .count').text(attendees_count);
+                }
+            });
+            $.each(data.friend_checkins, function () {
+                $('#' + this.id + ' .attendees').append('<img class="avatar" src="//graph.facebook.com/' + this.facebook_id + '/picture" />');
+                var attendees_count = parseInt($('#' + this.id + ' .count').text(), 10);
+                attendees_count--;
+                if (attendees_count === 0) {
+                    $('#' + this.id + ' .count').remove();
+                } else {
+                    $('#' + this.id + ' .count').text(attendees_count);
+                }
+            });
 
-        $('.count').each(function () {
-            $(this).text('+' + $(this).text());
-        });
+            $('.count').each(function () {
+                $(this).text('+' + $(this).text());
+            });
+        }
     });
 
     $.get('/screenings/', function (text) { screenings = text; });
