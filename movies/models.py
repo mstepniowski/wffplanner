@@ -102,7 +102,7 @@ def generate_ical_feed(user):
                            'description': screening.movie.info['description'],
                            'room': screening.room,
                            'dtstart': screening.date,
-                           'dtend': screening.date + datetime.timedelta(minutes=screening.movie.info['duration'])}
+                           'dtend': screening.date + datetime.timedelta(minutes=screening.movie.info.get('duration', 60))}
                           for screening in Screening.objects.filter(checkin__user=user)])
 
 
