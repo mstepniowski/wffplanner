@@ -3,9 +3,11 @@ import re
 import vobject
 from collections import defaultdict
 from dateutil import tz
+from filmaster_auth import FilmasterOAuthClient
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 
 from movies.fields import JSONField
 
@@ -151,3 +153,9 @@ def generate_ical(events, get_uid=generate_uid):
     calendar.add('X-WR-CALNAME').value = 'Warsaw Film Festival'
     
     return calendar.serialize()
+
+
+def movie_recommendations(user):
+    client = FilmasterOAuthClient(settings.FILMASTER_APP_ID, settings.FILMASTER_APP_SECRET)
+    access_token = client.facebook_login(user.get_profile().access_token)
+    return client.get('/1.1/country/PL/festival/1517021/recommendations/?limit=30&include=film')['objects']

@@ -183,6 +183,7 @@ th {
 
 .facepile {
     float: right;
+    width: 300px;
 }
 
 #rooms {
@@ -232,31 +233,37 @@ th {
     font-size: 24px;
 }
 
-#facebook-share img {
-    float: left;
-}
-
-#facebook-share, #ical {
+#facebook-share, #ical, #recommend {
     cursor: pointer;
-    width: 260px;
+    width: 290px;
     border: 1px solid #CCC;
     background-color: #EEE;
     padding: 3px;
     margin-top: -2px;
     font-size: 13px;
+    float: left;
 }
 
-#facebook-share:hover, #ical:hover {
+#facebook-share:hover, #ical:hover, #recommend:hover {
     background-color: #DDD;
 }
 
-#facebook-share p, #ical p {
+#facebook-share p, #ical p, #recommend p {
     margin-left: 35px;
     width: 220px;
 }
 
-#facebook-share img, #ical img {
+#ical p, #recommend p {
+    width: 110px;
+}
+
+#ical, #recommend {
+    width: 141px;
+}
+
+#facebook-share img, #ical img, #recommend img {
     float: left;
     width: 26px;
     height: 26px;
 }
+

@@ -15,7 +15,7 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from django.core.urlresolvers import reverse
 
-from movies.models import Calendar, Checkin, Screening, generate_ical_feed
+from movies.models import Calendar, Checkin, Screening, generate_ical_feed, movie_recommendations
 
 
 logger = logging.getLogger('django')
@@ -131,3 +131,9 @@ def cal(request, user_id, security_hash):
     response['Filename'] = 'wff.ics'
     response['Content-Disposition'] = 'attachment; filename=wff.ics'
     return response
+
+
+@login_required
+@never_cache
+def recommendations(request):
+    return HttpResponse(json.dumps({'data': movie_recommendations(request.user)}))

@@ -95,6 +95,29 @@ $(function() {
         $.get('/screenings/', function (text) { screenings = text; });
     });
 
+    $('#recommend').click(function () {
+        $.ajax({
+            url: '/recommendations/',
+            cache: false,
+            dataType: 'json',
+            success: function (data) {
+                $('.screening').css({
+                    borderTop: '10px solid #CCC',
+                    height: 79
+                });
+                $.each(data.data, function () {
+                    var rating = this.film.guess_rating;
+                    var title = this.film.title_localized;
+                    console.log(rating, title, $('.screening a:contains(' + title + ')'));
+                    $('.screening a:contains(' + title + ')').parent().css({
+                        borderTop: '10px solid hsl(' + (40 + rating * 10) + ', ' + Math.min(rating * 15, 100) + '%, 75%)'
+                    });
+                });
+            }
+        });
+    });
+
+    
     $('#schedule').scroll(function () {
         $('#rooms').scrollTop($(this).scrollTop());
     });

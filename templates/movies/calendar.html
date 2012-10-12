@@ -33,11 +33,14 @@
 	<div id="facebook-share">
 	    <img src="{{ STATIC_URL }}img/fb-share2.png"><p>Podziel się swoim harmonogramem</p>
 	</div>
+	<div id="recommend">
+	    <img src="{{ STATIC_URL }}img/heart.png"><p style="margin-top: -6px">Rekomendacje<span style="font-size: 9px; color: #C00; vertical-align: 25%">BETA</span></p>
+	</div>
 	<div id="ical" href="{{ ical_url }}">
-    	     <img src="{{ STATIC_URL }}img/cal.png"><p>Pobierz plik iCalendar</p>
+    	     <img src="{{ STATIC_URL }}img/cal.png"><p>Pobierz kalendarz</p>
 	</div>
     </div>
-    <p style="margin-left: 180px; height: 60px; width: 640px">Klikaj lewym przyciskiem myszy aby zaznaczyć seanse, na które zamierzasz się wybrać.<br>Te informacje będą od razu widoczne dla Twoich znajomych.</p>
+    <p style="margin-left: 180px; height: 60px; width: 640px">Klikaj lewym przyciskiem myszy aby zaznaczyć seanse, na które zamierzasz się wybrać. Te informacje będą od razu widoczne dla Twoich znajomych.</p>
     {% else %}
     <div class="facepile"><iframe src="http://www.facebook.com/plugins/facepile.php? 
 app_id={{ FACEBOOK_APP_ID }}" scrolling="no" frameborder="0" style="border:none;  
