@@ -84,7 +84,11 @@ $(function() {
 
     $.get('/screenings/', function (text) { screenings = text; });
     
-    $('.screening').click(function () {
+    $('.screening').click(function (event) {
+        if (event.target.tagName === 'A') {
+            return;
+        }
+        console.log(event.target);
         if ($(this).hasClass('active')) {
             $(this).removeClass('active').find('.me').remove();
             $.post('/checkout/' + $(this).attr('id') + '/');

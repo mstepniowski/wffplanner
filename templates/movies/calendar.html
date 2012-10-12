@@ -78,7 +78,7 @@ overflow:hidden; width:240px; height:68px;" allowTransparency="true"></iframe></
     {% for day in row.screenings %}
     <td>{% for screening in day %}
 	<div class="screening" id="{{ screening.id }}">
-	    <a href="{{ screening.movie.url }}">{{ screening.movie.title }}</a>
+	    <a href="{{ screening.movie.url }}" target="_blank">{{ screening.movie.title }}</a>
 	    <div class="attendees">{% if screening.attendees_count > 0 %}<div class="count">{{ screening.attendees_count }}</div>{% endif %}</div>
 	</div>
 	{% empty %}
