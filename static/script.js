@@ -96,6 +96,7 @@ $(function() {
     });
 
     $('#recommend').click(function () {
+        _gaq.push(['_trackEvent', 'recommendations', 'get']);
         $.ajax({
             url: '/recommendations/',
             cache: false,
