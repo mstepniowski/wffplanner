@@ -48,9 +48,13 @@ th {
     border: 2px solid #FFF;
     -moz-box-shadow: 2px 2px 4px #999;
     -webkit-box-shadow: 2px 2px 4px #999;
+    -ms-box-shadow: 2px 2px 4px #999;
+    -o-box-shadow: 2px 2px 4px #999;
     box-shadow: 2px 2px 4px #999;;
     -moz-transform: rotate(5deg);
     -webkit-transform: rotate(5deg);
+    -ms-transform: rotate(5deg);
+    -o-transform: rotate(5deg);
     transform: rotate(5deg);
 }
 
@@ -66,9 +70,13 @@ th {
     padding-top: 4px;
     -moz-box-shadow: 2px 2px 4px #999;
     -webkit-box-shadow: 2px 2px 4px #999;
+    -ms-box-shadow: 2px 2px 4px #999;
+    -o-box-shadow: 2px 2px 4px #999;
     box-shadow: 2px 2px 4px #999;;
     -moz-transform: rotate(5deg);
     -webkit-transform: rotate(5deg);
+    -ms-transform: rotate(5deg);
+    -o-transform: rotate(5deg);
     transform: rotate(5deg);
     z-index: 2;
 }
@@ -88,6 +96,10 @@ th {
     height: 300px;
     border-radius: 50%;
     background-color: red;
+    -moz-box-shadow: 6px 6px 12px darkred;
+    -webkit-box-shadow: 6px 6px 12px darkred;
+    -ms-box-shadow:  6px 6px 12px darkred;
+    -o-box-shadow: 6px 6px 12px darkred;
     box-shadow: 6px 6px 12px darkred;
 }
 
@@ -118,9 +130,12 @@ th {
     height: 68px;
     padding: 6px;
     z-index: 20;
+    -moz-box-shadow: 6px 6px 12px #999;
+    -webkit-box-shadow: 6px 6px 12px #999;
+    -ms-box-shadow:  6px 6px 12px #999;
+    -o-box-shadow: 6px 6px 12px #999;
     box-shadow: 6px 6px 12px #999;
     border: 1px solid #999;
-    
     background-color: white;
     color: #333;
     line-height: 28px;
@@ -195,6 +210,10 @@ th {
     width: 90px;
     overflow: hidden;
     background-color: red;
+    -moz-box-shadow: 6px 6px 12px darkred;
+    -webkit-box-shadow: 6px 6px 12px darkred;
+    -ms-box-shadow:  6px 6px 12px darkred;
+    -o-box-shadow: 6px 6px 12px darkred;
     box-shadow: 6px 6px 12px darkred;
     z-index: 20;
 }
@@ -229,6 +248,9 @@ th {
     height: 20px;
     -moz-transform: rotate(-90deg);
     -webkit-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg);
     color: #FFF;
     font-size: 24px;
 }
