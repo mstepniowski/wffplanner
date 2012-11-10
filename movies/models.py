@@ -12,9 +12,16 @@ from django.conf import settings
 from movies.fields import JSONField
 
 
+class Festival(models.Model):
+    name = models.CharField(max_length=250)
+    url = models.CharField(max_length=250)
+
+    def __unicode__(self):
+        return self.name
 
 class Movie(models.Model):
     url = models.CharField(max_length=250, primary_key=True)
+    festival = models.ForeignKey(Festival, null=True, blank=True)
     title = models.CharField(max_length=250, null=False, blank=False)
     info = JSONField(json_type=dict, default='{}', null=False, blank=False)
     collection = models.ForeignKey('self', null=True, blank=True)
