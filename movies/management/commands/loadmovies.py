@@ -23,7 +23,7 @@ class Command(BaseCommand):
             self.load_screenings(movie, document.getroot())
 
         self.postprocess(movies)
-    
+
     def load_extra_info(self, root):
         info = {'description': '\n'.join(el.text for el in
                                          root.cssselect('.ps_body p'))}
@@ -35,7 +35,7 @@ class Command(BaseCommand):
             if len(label) > 0 and label[0].text.strip() == 'Czas trwania:':
                 info['duration'] = int(label[0].tail.strip()[:-3])
         return info
-    
+
     def load_screenings(self, movie, root):
         elements = root.cssselect('.pokazy li')[1:] # first list element is a header
         for element in elements:
@@ -43,9 +43,9 @@ class Command(BaseCommand):
             hour, minute = parts[2].split('.')
             Screening.objects.get_or_create(
                 movie=movie,
-                date=datetime(2012, 10, int(parts[1].split(' ')[0]), int(hour), int(minute)),
+                date=datetime(2013, 10, int(parts[1].split(' ')[0]), int(hour), int(minute)),
                 room=element.text.strip())
-        
+
     def postprocess(self, movies):
         for movie in movies.values():
             collection = movie.info.get('collection')

@@ -26,7 +26,7 @@ def hexdigest(user_id):
     digest_maker.update(str(user_id))
     return digest_maker.hexdigest()
 
-    
+
 @ensure_csrf_cookie
 def calendar(request):
     c = Calendar()
@@ -48,7 +48,7 @@ def checkin(request, screening_id):
                            screening_id=int(screening_id),
                            facebook_id=social_auth.facebook_id)
     Screening.objects.filter(id=int(screening_id)).update(attendees_count=F('attendees_count') + 1)
-    
+
     # TODO: Post to OpenGraph
     # graph = GraphAPI(social_auth.access_token)
     # try:
@@ -58,7 +58,7 @@ def checkin(request, screening_id):
     #     logging.exception('Error when posting to OpenGraph: %s' % e.message)
     # except:
     #     logging.exception('Error when posting to OpenGraph')
-    
+
     return HttpResponse('OK')
 
 
@@ -74,7 +74,7 @@ def checkout(request, screening_id):
         # TODO: Remove from OpenGraph
     except Checkin.DoesNotExist:
         pass
-    
+
     return HttpResponse('OK')
 
 
@@ -91,7 +91,7 @@ def get_checkins(request):
 
     friend_checkins = [{'facebook_id': ch.facebook_id, 'id': ch.screening_id}
                        for ch in Checkin.objects.filter(facebook_id__in=friend_ids)]
-    
+
     return HttpResponse(json.dumps({
         'my_checkins': [{'facebook_id': ch.facebook_id, 'id': ch.screening_id}
                          for ch in Checkin.objects.filter(user=request.user)],
@@ -121,12 +121,12 @@ def screening_list(request):
 def cal(request, user_id, security_hash):
     if hexdigest(user_id) != security_hash:
         raise Http404
-    
+
     try:
         user = User.objects.get(pk = user_id)
     except User.DoesNotExist:
         raise Http404
-    
+
     response = HttpResponse(generate_ical_feed(user), 'text/calendar')
     response['Filename'] = 'wff.ics'
     response['Content-Disposition'] = 'attachment; filename=wff.ics'

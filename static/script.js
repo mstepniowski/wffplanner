@@ -83,7 +83,7 @@ $(function() {
     });
 
     $.get('/screenings/', function (text) { screenings = text; });
-    
+
     $('.screening').click(function (event) {
         if (event.target.tagName === 'A') {
             return;
@@ -100,7 +100,6 @@ $(function() {
     });
 
     $('#recommend').click(function () {
-        _gaq.push(['_trackEvent', 'recommendations', 'get']);
         $.ajax({
             url: '/recommendations/',
             cache: false,
@@ -122,7 +121,7 @@ $(function() {
         });
     });
 
-    
+
     $('#schedule').scroll(function () {
         $('#rooms').scrollTop($(this).scrollTop());
     });
@@ -135,14 +134,12 @@ $(function() {
             name: 'Mój harmonogram na Warsaw Film Festival',
             description: screenings
         }, function () {
-            _gaq.push(['_trackSocial', 'facebook', 'send']);
+            ga('send', 'social', 'facebook', 'share', 'http://wffplanner.stepniowski.com/');
         });
     });
 
     $('#ical').click(function () {
-        _gaq.push(['_trackEvent', 'calendar', 'download']);
+        ga('send', 'event', 'calendar', 'download');
         document.location.href = $(this).attr('href');
     });
 });
-
-

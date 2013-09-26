@@ -25,7 +25,7 @@ class Movie(models.Model):
     title = models.CharField(max_length=250, null=False, blank=False)
     info = JSONField(json_type=dict, default='{}', null=False, blank=False)
     collection = models.ForeignKey('self', null=True, blank=True)
-    
+
     def __unicode__(self):
         return self.title
 
@@ -35,7 +35,7 @@ class Screening(models.Model):
     date = models.DateTimeField(null=False)
     room = models.CharField(max_length=250, null=False, blank=False)
     attendees_count = models.IntegerField(null=False, blank=False, default=0)
-    
+
     def __unicode__(self):
         return u'%s: %s %s' % (self.movie.title, self.room, self.date)
 
@@ -44,7 +44,7 @@ class Checkin(models.Model):
     user = models.ForeignKey(User)
     screening = models.ForeignKey(Screening)
     facebook_id = models.CharField(max_length=30, db_index=True)
-    
+
     class Meta:
         unique_together = ('user', 'screening')
 
@@ -62,7 +62,7 @@ class Calendar(object):
 
     def dates(self):
         return set(screening.date for screening in self.screenings)
-    
+
     def dates_for_room(self, room):
         return set(screening.date for screening in self.screenings_for_room(room))
 
@@ -103,7 +103,7 @@ class Calendar(object):
         # ...then the rest
         result.extend(sorted(room for room in rooms if not room.startswith('MULTIKINO')))
         return result
-    
+
 
 def generate_ical_feed(user):
     """Returns an iCal feed for passed in user."""
@@ -118,9 +118,9 @@ def generate_ical_feed(user):
 def generate_uid(event):
     name = re.sub(r'[^a-zA-Z0-9-.]', '-', event['name'].lower())
     room = re.sub(r'[^a-zA-Z0-9-.]', '-', event['room'].lower())
-    return 'wff-2012-' + name + '-' + room + '-' + str(event['dtstart'].day) + '-' + str(event['dtstart'].hour)
+    return 'wff-2013-' + name + '-' + room + '-' + str(event['dtstart'].day) + '-' + str(event['dtstart'].hour)
 
-                        
+
 def generate_ical(events, get_uid=generate_uid):
     """Generates an iCalendar feed for a list of `events`. After
     saving the feed to a file, it can be imported directly to iCal,
@@ -147,7 +147,7 @@ def generate_ical(events, get_uid=generate_uid):
     calendar = vobject.iCalendar()
     for event in events:
         vevent = calendar.add('vevent')
-        
+
         vevent.add('summary').value = event['name']
         vevent.add('description').value = event['description']
         vevent.add('dtstart').value = event['dtstart'].replace(tzinfo=timezone)
@@ -156,9 +156,9 @@ def generate_ical(events, get_uid=generate_uid):
         vevent.add('uid').value = get_uid(event)
         vevent.add('uri').value = 'http://wffplanner.stepniowski.com/'
         vevent.add('location').value = event['room']
-    
+
     calendar.add('X-WR-CALNAME').value = 'Warsaw Film Festival'
-    
+
     return calendar.serialize()
 
 

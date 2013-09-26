@@ -140,7 +140,7 @@ th {
     color: #333;
     line-height: 28px;
     font-size: 16px;
-    text-shadow: 1px 1px #EEE;   
+    text-shadow: 1px 1px #EEE;
 }
 
 .facebook-connect {
@@ -228,7 +228,7 @@ th {
 .time b {
     text-align: center;
     color: #FFF;
-    
+
 }
 
 .room2 {
@@ -255,7 +255,7 @@ th {
     font-size: 24px;
 }
 
-#facebook-share, #ical, #recommend {
+#facebook-share, #ical {
     cursor: pointer;
     width: 290px;
     border: 1px solid #CCC;
@@ -266,21 +266,13 @@ th {
     float: left;
 }
 
-#facebook-share:hover, #ical:hover, #recommend:hover {
+#facebook-share:hover, #ical:hover {
     background-color: #DDD;
 }
 
-#facebook-share p, #ical p, #recommend p {
+#facebook-share p, #ical p {
     margin-left: 35px;
     width: 220px;
-}
-
-#ical p, #recommend p {
-    width: 110px;
-}
-
-#ical, #recommend {
-    width: 141px;
 }
 
 #facebook-share img, #ical img, #recommend img {
@@ -288,4 +280,3 @@ th {
     width: 26px;
     height: 26px;
 }
-
