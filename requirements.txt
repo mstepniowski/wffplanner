@@ -5,6 +5,7 @@ requests==0.14.0
 facepy
 lxml
 django_facebook==4.2.1
-PIL
+Pillow
 oauth==1.0.1
 vobject
+cssselect==0.9.1

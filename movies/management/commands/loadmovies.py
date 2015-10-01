@@ -1,3 +1,4 @@
+import codecs
 from datetime import datetime
 from lxml import html
 
@@ -14,44 +15,32 @@ class Command(BaseCommand):
         movies = {}
         for file_name in file_names:
             print file_name
-            document = html.parse(file_name)
-            movie, _ = Movie.objects.get_or_create(url=SITE_ROOT + file_name.split('/')[-1] + '/')
-            movie.title = document.getroot().cssselect('.tytul.zloty')[0].text
-            movie.info = self.load_extra_info(document.getroot())
+            f = codecs.open(file_name, 'r', encoding='utf-8')
+            e = html.fragment_fromstring(f.read())
+            url = e.cssselect('.fastGrid a.button')[0].get('href')
+            movie, _ = Movie.objects.get_or_create(url=url)
+            movie.title = e.cssselect('h1')[0].text
+            movie.info = self.load_extra_info(e)
             movie.save()
             movies[movie.title] = movie
-            self.load_screenings(movie, document.getroot())
+            self.load_screenings(movie, e)
 
         self.postprocess(movies)
 
-    def load_extra_info(self, root):
-        info = {'description': '\n'.join(el.text for el in
-                                         root.cssselect('.ps_body p'))}
-        rows = root.cssselect('.row')
-        for row in rows:
-            label = row.cssselect('span.zloty')
-            if len(label) > 0 and label[0].text.strip() == 'Film w zestawie:':
-                info['collection'] = row.cssselect('a')[0].text.strip()
-            if len(label) > 0 and label[0].text.strip() == 'Czas trwania:':
-                info['duration'] = int(label[0].tail.strip()[:-3])
-        return info
+    def load_extra_info(self, e):
+        ps = e.cssselect('p')
+        if len(ps) > 2:
+            return {'description': ps[2].text}
+        else:
+            return {}
 
-    def load_screenings(self, movie, root):
-        elements = root.cssselect('.pokazy li')[1:] # first list element is a header
+    def load_screenings(self, movie, e):
+        elements = e.cssselect('.title strong')
         for element in elements:
-            parts = [(e.tail or '').strip() for e in element]
-            hour, minute = parts[2].split('.')
-            Screening.objects.get_or_create(
-                movie=movie,
-                date=datetime(2013, 10, int(parts[1].split(' ')[0]), int(hour), int(minute)),
-                room=element.text.strip())
+            parts = [s.strip() for s in element.text.split('>')]
+            room = parts[0]
+            dt = datetime.strptime(parts[2] + ' ' + parts[3], '%d.%m.%Y %H:%M')
+            Screening.objects.get_or_create(movie=movie, date=dt, room=room)
 
     def postprocess(self, movies):
-        for movie in movies.values():
-            collection = movie.info.get('collection')
-            if collection is not None and collection != movie.title:
-                try:
-                    movie.collection_id = movies[collection].url
-                except KeyError:
-                    print 'KeyError: ' + collection
-                movie.save()
+        pass

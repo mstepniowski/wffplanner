@@ -1,61 +1,22 @@
 import codecs
 import requests
+import sys
 from lxml import html
 
 
-SITE_ROOT = 'http://www.wff.pl'
-
-
-def alphabet():
-    for x in range(ord('a'), ord('z') + 1):
-        yield chr(x)
-
-
-def alphabetical_urls():
-    yield SITE_ROOT + '/filmy/wszystkie/special/0/'
-    for c in alphabet():
-        yield SITE_ROOT + '/filmy/wszystkie/%s/0/' % c
-
-
-def get_movie_urls(url, recurse=True):
-    print 'get_movie_urls(%r, recurse=%r)' % (url, recurse)
-    response = requests.get(url)
+def get_movies():
+    response = requests.get('http://wff.pl/filmy/2015')
     if not response.status_code / 100 == 2:
-        return []
-        
+        sys.exit(1)
+
     document = html.fromstring(response.content)
-    urls = [SITE_ROOT + '/' + a.get('href')
-            for a in document.cssselect('.nowina a:first-child')]
-
-    is_there_submenu = len(document.cssselect('.podmenu.dolny')) >= 2
-    print len(document.cssselect('.podmenu.dolny'))
-    if is_there_submenu and recurse:
-        submenu = document.cssselect('.podmenu.dolny')[0]
-        next_urls = [SITE_ROOT + '/' + a.get('href')
-                     for a in submenu.cssselect('a')
-                     if a.get('class') != 'current']
-        for fetch_url in next_urls:
-            urls += get_movie_urls(fetch_url, recurse=False)
-        
-    return urls
-
-
-def get_all_movie_urls():
-    MOVIE_URLS = []
-    
-    try:
-        for url in alphabetical_urls():
-            MOVIE_URLS.extend(get_movie_urls(url))
-    finally:
-        output = file('urls.txt', 'w')
-        for url in MOVIE_URLS:
-            output.write(url + '\n')
+    articles = document.cssselect('.movieItem article')
+    for i, article in enumerate(articles):
+        print article.cssselect('h1')[0].text
+        output = codecs.open('data/%d.html' % i, 'w', encoding='utf-8')
+        output.write(html.tostring(article))
         output.close()
 
 
-def fetch_movie(url):
-    print 'fetch_movie(%r)' % url
-    response = requests.get(url)
-    output = codecs.open('data/' + url.split('/')[-2], 'w', encoding='utf-8')
-    output.write(response.content.decode('utf-8'))
-    output.close()
+if __name__ == '__main__':
+    get_movies()
